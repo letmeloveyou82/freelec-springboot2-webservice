@@ -2,7 +2,6 @@ package com.jojoldu.book.springboot.domain.posts;
 
 import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,7 +45,6 @@ public class PostsRepositoryTest {
     }
 
     @Test
-    @DisplayName("BaseTimeEntity_등록")
     public void BaseTimeEntity_Create() { // BaseTimeEntity_등록
         // given
         LocalDateTime now = LocalDateTime.of(2019, 6, 4, 0, 0, 0);
