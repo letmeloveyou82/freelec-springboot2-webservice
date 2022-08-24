@@ -28,7 +28,14 @@ public class PostsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이메일이 없습니다. email="+ email));
 
-        requestDto.setUser(user);
+        // requestDto.setUser(user); 와 같은 효과
+        requestDto = PostsSaveRequestDto.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .author(requestDto.getAuthor())
+                .user(user)
+                .build();
+
         log.info("PostsService save() 실행");
         return postsRepository.save(requestDto.toEntity()).getId();
     }
