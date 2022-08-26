@@ -28,15 +28,20 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @Builder
-    public User(String name, String email, String picture, Role role){
+    public User(Long id, String name, String email, String picture, Role role, String nickname){
+        this.id = id;
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
+        this.nickname = nickname != null ? nickname : "익명";
     }
 
-    public User update(String name, String picture){
+    public User snsUpdate(String name, String picture){
         this.name = name;
         this.picture = picture;
 
@@ -45,5 +50,9 @@ public class User extends BaseTimeEntity {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
     }
 }

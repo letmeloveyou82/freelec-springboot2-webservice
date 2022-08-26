@@ -4,13 +4,16 @@ import com.jojoldu.book.springboot.domain.user.Role;
 import com.jojoldu.book.springboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
+    private Long id;
     private String name;
     private String email;
     private String picture;
@@ -53,12 +56,15 @@ public class OAuthAttributes {
                 .build();
     }
 
+    // Dto -> Entity
     public User toEntity() { // User 엔티티를 생성
         return User.builder()
+                .id(id)
                 .name(name)
                 .email(email)
                 .picture(picture)
                 .role(Role.USER) // 가입 시 기본 권한은 GUEST
+                .nickname("익명")
                 .build();
     }
 }

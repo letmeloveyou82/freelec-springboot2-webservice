@@ -12,6 +12,14 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+
+        $('#btn-deleteUser').on('click', function () {
+            _this.deleteUser();
+        });
+
+        $('#btn-updateUser').on('click', function () {
+            _this.updateUser();
+        });
     },
     save : function () {
         var data = {
@@ -55,20 +63,55 @@ var main = {
         });
     },
     delete : function () {
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/v1/posts/'+id,
+            dataType: 'json',
+            contentType:'application/json; charset=utf-8'
+        }).done(function() {
+            alert('글이 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+    deleteUser : function () {
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/v1/users/'+id,
+            dataType: 'json',
+            contentType:'application/json; charset=utf-8'
+        }).done(function() {
+            alert('회원 탈퇴가 완료되었습니다.');
+            window.location.href = '/logout';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+    updateUser : function () {
+    var data = {
+                nickname: $('#nickname').val()
+            };
+
             var id = $('#id').val();
 
             $.ajax({
-                type: 'DELETE',
-                url: '/api/v1/posts/'+id,
+                type: 'PUT',
+                url: '/api/v1/users/'+id,
                 dataType: 'json',
-                contentType:'application/json; charset=utf-8'
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify(data)
             }).done(function() {
-                alert('글이 삭제되었습니다.');
+                alert('사용자 정보가 수정되었습니다.');
                 window.location.href = '/';
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
-        }
+    }
 };
 
 main.init();
