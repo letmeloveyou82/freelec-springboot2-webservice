@@ -19,13 +19,15 @@
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea class="form-control" id="content">{{posts.content}} readonly</textarea>
+                <textarea class="form-control" id="content" readonly>{{posts.content}}</textarea>
             </div>
             <div class="form-group">
                 <label for="content">조회수</label>
                 <input type="text" class="form-control" id="viewCount" value="{{posts.viewCount}}" readonly>
             </div>
         </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <a href="/posts/update/{{id}}" role="button" class="btn btn-primary" id="btn-wantUpdate">수정하기</a>
     </div>
 </div>
 

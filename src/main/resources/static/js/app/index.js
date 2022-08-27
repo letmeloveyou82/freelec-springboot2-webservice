@@ -20,6 +20,7 @@ var main = {
         $('#btn-updateUser').on('click', function () {
             _this.updateUser();
         });
+
     },
     save : function () {
         var data = {
