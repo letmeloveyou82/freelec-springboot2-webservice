@@ -24,16 +24,18 @@
                 <th>작성자</th>
                 <th>작성자아이디</th>
                 <th>최종수정일</th>
+                <th>조회수</th>
             </tr>
             </thead>
             <tbody id="tbody">
             {{#posts}}
                 <tr>
                     <td>{{id}}</td>
-                    <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                    <td><a href="/posts/{{id}}">{{title}}</a></td>
                     <td>{{author}}</td>
                     <td>{{userId}}</td>
                     <td>{{modifiedDate}}</td>
+                    <td>{{viewCount}}</td>
                 </tr>
             {{/posts}}
             </tbody>

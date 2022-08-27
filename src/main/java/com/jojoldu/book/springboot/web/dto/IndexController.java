@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpSession;
-
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -33,12 +31,21 @@ public class IndexController {
         return "posts-save";
     }
 
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model) {
+    @GetMapping("/posts/{id}") // 특정 게시물 조회 페이지
+    public String postsReadOrUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
         PostsResponseDto dto = postsService.findById(id);
-        model.addAttribute("post", dto);
-
-        return "posts-update";
+        if(user != null){
+            if(dto.getUserId().equals(user.getId())){
+                model.addAttribute("posts", dto);
+                return "posts-update";
+            }
+            else{
+                postsService.updateViewCount(id);
+                model.addAttribute("posts", dto);
+                return "posts-read";
+            }
+        }
+        return null;
     }
 
     @GetMapping("/users/update/{id}")

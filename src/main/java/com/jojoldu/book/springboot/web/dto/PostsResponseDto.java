@@ -11,11 +11,14 @@ public class PostsResponseDto {
     private String author;
     private Long userId;
 
+    private int viewCount;
+
     public PostsResponseDto(Posts entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.author = entity.getAuthor();
         this.userId = entity.getUser().getId();
+        this.viewCount = entity.getViewCount();
     }
 }

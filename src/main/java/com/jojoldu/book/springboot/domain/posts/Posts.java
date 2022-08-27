@@ -29,12 +29,17 @@ public class Posts extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // 테이블 칼럼 - 조회수
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int viewCount;
+
     @Builder
-    public Posts(String title, String content, String author, User user){
+    public Posts(String title, String content, String author, User user, int viewCount){
         this.title = title;
         this.content = content;
         this.author = author;
         this.user = user;
+        this.viewCount = viewCount;
     }
 
     public void update(String title, String content){
