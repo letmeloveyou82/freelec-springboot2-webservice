@@ -21,6 +21,13 @@ var main = {
             _this.updateUser();
         });
 
+        $('#btn-scrap').on('click', function () {
+            _this.scrap();
+        });
+
+        $('#btn-cancelScrap').on('click', function () {
+            _this.cancelScrap();
+        });
     },
     save : function () {
         var data = {
@@ -112,7 +119,36 @@ var main = {
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
-    }
+    },
+    scrap : function () {
+            var id = $('#id').val();
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/scrap/'+id,
+                dataType: 'json',
+                contentType:'application/json; charset=utf-8',
+            }).done(function() {
+                alert('스크랩이 완료되었습니다.');
+                window.location.href = '/';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        },
+    cancelScrap : function () {
+                var id = $('#id').val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/api/v1/scrap/'+id,
+                    dataType: 'json',
+                    contentType:'application/json; charset=utf-8'
+                }).done(function() {
+                    alert('스크랩이 취소되었습니다.');
+                    window.location.href = '/';
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
 };
 
 main.init();

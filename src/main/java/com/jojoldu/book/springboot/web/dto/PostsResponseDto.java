@@ -13,6 +13,8 @@ public class PostsResponseDto {
 
     private int viewCount;
 
+    private int scrapCount;
+
     public PostsResponseDto(Posts entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -20,5 +22,6 @@ public class PostsResponseDto {
         this.author = entity.getAuthor();
         this.userId = entity.getUser().getId();
         this.viewCount = entity.getViewCount();
+        this.scrapCount = entity.getScrapCount();
     }
 }
