@@ -15,6 +15,8 @@ public class PostsListResponseDto {
 
     private int viewCount;
 
+    private int scrapCount;
+
     public PostsListResponseDto(Posts entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -22,5 +24,6 @@ public class PostsListResponseDto {
         this.modifiedDate = entity.getModifiedDate();
         this.userId = entity.getUser().getId();
         this.viewCount = entity.getViewCount();
+        this.scrapCount = entity.getScrapCount();
     }
 }

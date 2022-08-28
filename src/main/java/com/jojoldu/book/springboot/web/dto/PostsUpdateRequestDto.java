@@ -10,9 +10,12 @@ public class PostsUpdateRequestDto {
     private String title;
     private String content;
 
+    private int scrapCount;
+
     @Builder
-    public PostsUpdateRequestDto(String title, String content){
+    public PostsUpdateRequestDto(String title, String content, int scrapCount){
         this.title = title;
         this.content = content;
+        this.scrapCount = scrapCount;
     }
 }

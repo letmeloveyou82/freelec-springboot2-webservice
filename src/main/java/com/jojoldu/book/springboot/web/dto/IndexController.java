@@ -4,6 +4,7 @@ import com.jojoldu.book.springboot.config.auth.CustomOAuth2UserService;
 import com.jojoldu.book.springboot.config.auth.LoginUser;
 import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
 import com.jojoldu.book.springboot.service.posts.PostsService;
+import com.jojoldu.book.springboot.service.scrap.ScrapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class IndexController {
     private final PostsService postsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final ScrapService scrapService;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
@@ -33,7 +35,25 @@ public class IndexController {
         return "posts-save";
     }
 
-    @GetMapping("/posts/{id}") // 특정 게시물 조회 페이지
+    @GetMapping("/posts/{id}") // 특정 게시물 조회 또는 수정 페이지
+    public String postsReadOrUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
+        PostsResponseDto dto = postsService.findById(id);
+        if(user != null){
+            if(!dto.getUserId().equals(user.getId())){
+                postsService.updateViewCount(id);
+                model.addAttribute("posts", dto);
+                return "posts-read";
+            }
+            else{
+                model.addAttribute("posts", dto);
+                return "posts-update";
+            }
+        }
+        model.addAttribute("posts", dto);
+        return null;
+    }
+
+    @GetMapping("/posts/read/{id}") // 특정 게시물 조회 페이지
     public String postsRead(@PathVariable Long id, Model model, @LoginUser SessionUser user){
         PostsResponseDto dto = postsService.findById(id);
         if(user != null){
