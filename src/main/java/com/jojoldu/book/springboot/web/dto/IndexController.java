@@ -4,9 +4,11 @@ import com.jojoldu.book.springboot.config.auth.CustomOAuth2UserService;
 import com.jojoldu.book.springboot.config.auth.LoginUser;
 import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
 import com.jojoldu.book.springboot.service.posts.PostsService;
-import com.jojoldu.book.springboot.service.scrap.ScrapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class IndexController {
     private final PostsService postsService;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final ScrapService scrapService;
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
-        model.addAttribute("posts", postsService.findAllDesc());
+    public String index(Model model, @LoginUser SessionUser user, @PageableDefault(size = 5, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        model.addAttribute("posts", postsService.pageList(pageable));
         if(user!=null){
             model.addAttribute("user", customOAuth2UserService.findById(user.getId()));
             // model.addAttribute("userName", user.getName());

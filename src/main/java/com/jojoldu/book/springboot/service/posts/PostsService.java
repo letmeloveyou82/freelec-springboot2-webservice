@@ -10,6 +10,7 @@ import com.jojoldu.book.springboot.web.dto.PostsSaveRequestDto;
 import com.jojoldu.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +87,12 @@ public class PostsService {
     @Transactional
     public int minusScrapCount(Long id){
         return postsRepository.minusScrapCount(id);
+    }
+
+    // paging
+    @Transactional(readOnly = true)
+    public Slice<PostsListResponseDto> pageList(Pageable pageable){
+        Slice<Posts> slicePosts = postsRepository.findSliceBy(pageable);
+        return slicePosts.map(posts -> new PostsListResponseDto(posts));
     }
 }
