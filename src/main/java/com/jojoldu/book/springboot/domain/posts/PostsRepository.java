@@ -1,5 +1,7 @@
 package com.jojoldu.book.springboot.domain.posts;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +24,6 @@ public interface PostsRepository extends JpaRepository<Posts, Long>{ // 기본�
     @Modifying
     @Query("UPDATE Posts SET scrapCount = scrapCount - 1 WHERE id = :id")
     int minusScrapCount(@Param("id") Long id);
+
+    Slice<Posts> findSliceBy(Pageable pageable);
 }
